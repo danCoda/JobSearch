@@ -1,9 +1,11 @@
+type Address = {
+  formattedAddress: string;
+  zoneId: string;
+};
+
 type Company = {
   name: string;
-  address: {
-    formattedAddress: string;
-    zoneId: string;
-  };
+  address: Address;
   reportTo: {
     name: string;
     phone: string;
@@ -27,4 +29,14 @@ export type Job = {
   shifts: Shift[];
   branch: String;
   branchPhoneNumber: String;
+};
+
+export type User = {
+  address: Address;
+  email: string;
+  firstName: string;
+  lastName: string;
+  maxJobDistance: number;
+  phoneNumber: string;
+  workerId: string;
 };

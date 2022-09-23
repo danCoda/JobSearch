@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import "./App.css";
 import { JobList } from "./Components/JobList";
 import { Navbar } from "./Components/Navbar";
-import {Login } from "./Pages/Login";
+import { Login } from "./Pages/Login";
+import { Register } from "./Pages/Register";
 export const App = () => {
   const isLoggedIn = false;
 
@@ -31,7 +32,11 @@ export const App = () => {
             }
           />
 
-          <Route path="/jobList" element={isLoggedIn? <JobList /> : <Login />} />
+          <Route
+            path="/jobList"
+            element={isLoggedIn ? <JobList /> : <Login />}
+          />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>
