@@ -15,8 +15,11 @@ export const JobList = () => {
     };
 
     fetchJobs()
-      // make sure to catch any error
       .catch(console.error);
+
+    return () => {
+      setJobs([]);
+    };
   }, []);
 
   console.log("Jobs: ", jobs);
