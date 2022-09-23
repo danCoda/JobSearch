@@ -1,8 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../State";
 
 export const useJobList = () => {
   const [error, setError] = useState<null | string>(null);
   const [isPending, setIsPending] = useState(false);
+
+  const dispatch = useDispatch();
+  const { addJobList } = bindActionCreators(actionCreators, dispatch);
 
   const getJobList = async (workerId: string) => {
     setError(null);
@@ -14,6 +20,8 @@ export const useJobList = () => {
 
         setIsPending(false);
         setError(null);
+        addJobList(jobs);
+
         return jobs;
     } catch (e) {
         if (e instanceof Error) {

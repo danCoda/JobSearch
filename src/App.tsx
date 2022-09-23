@@ -6,7 +6,7 @@ import { Navbar } from "./Components/Navbar";
 import { Login } from "./Pages/Login";
 import { Register } from "./Pages/Register";
 export const App = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <div className="App">
@@ -36,6 +36,10 @@ export const App = () => {
             path="/jobList"
             element={isLoggedIn ? <JobList /> : <Login />}
           />
+          <Route
+            path="/login"
+            element={<Login />}
+          />          
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
