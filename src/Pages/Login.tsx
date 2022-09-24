@@ -23,8 +23,8 @@ export const Login = () => {
   };
 
   return (
-    <>
-      <h2>Login {isPending}</h2>
+    <div className="mx-sm-auto col-lg-5 mt-sm-5">
+      <h2>Login</h2>
       <p>
         If you have no account,{" "}
         <strong>
@@ -34,29 +34,55 @@ export const Login = () => {
       </p>
       <p>
         If you are <em>Jim Rose</em>,{" "}
-        <button onClick={setTestAccount}>Test</button>
+        {isPending && (
+          <button className="btn btn-warning" disabled>
+            Loading...
+          </button>
+        )}
+        {!isPending && (
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={setTestAccount}
+          >
+            Test here
+          </button>
+        )}
       </p>
       <form onSubmit={handleSubmit}>
-        <label>
-          <span>Email</span>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputEmail">
+            Email
+          </label>
           <input
+            className="form-control"
+            id="inputEmail"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-        </label>
-        <label>
-          <span>Password</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputPassword">
+            Password
+          </label>
           <input
+            className="form-control"
+            id="inputPassword"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-        </label>
-        {isPending && <button disabled>Loading...</button>}
-        {!isPending && <button>Login</button>}
+        </div>
+
+        {isPending && (
+          <button className="btn btn-primary" disabled>
+            Loading...
+          </button>
+        )}
+        {!isPending && <button className="btn btn-primary">Login</button>}
         {error && <p>Error! {error}</p>}
       </form>
-    </>
+    </div>
   );
 };

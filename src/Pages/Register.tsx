@@ -10,56 +10,82 @@ export const Register = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Yoooo, handle the registraiton");
+    alert(
+      "Todo: Server-side validation and save user details. For testing, please Login ('Test')"
+    );
   };
 
   return (
-    <>
+    <div className="mx-sm-auto col-lg-5 mt-sm-5">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          <span>Email</span>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputEmail">
+            Email
+          </label>
           <input
+            className="form-control"
+            id="inputEmail"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-        </label>
-        <label>
-          <span>Password</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputPassword">
+            Password
+          </label>
           <input
+            className="form-control"
+            id="inputPassword"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-        </label>
-        <label>
-          <span>First name</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputFirstName">
+            First name
+          </label>
           <input
+            className="form-control"
+            id="inputFirstName"
             type="text"
             onChange={(e) => setFirstName(e.target.value)}
             value={firstName}
           />
-        </label>
-        <label>
-          <span>Last name</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputLastName">
+            Last name
+          </label>
           <input
+            className="form-control"
+            id="inputLastName"
             type="text"
             onChange={(e) => setLastName(e.target.value)}
             value={lastName}
           />
-        </label>
-        <label>
-          <span>Phone number</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputPhoneNumber">
+            Phone number
+          </label>
           <input
+            className="form-control"
+            id="inputPhoneNumber"
             type="number"
             onChange={(e) => setPhoneNumber(e.target.value)}
             value={phoneNumber}
           />
-        </label>
-        <label>
-          <span>Maximum job distance ({maxJobDistance} miles)</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="inputMaxJobDistance">
+            Maximum job distance ({maxJobDistance} miles)
+          </label>
           <input
+            className="form-range"
+            id="inputMaxJobDistance"
             type="range"
             min="0"
             step="10"
@@ -67,9 +93,9 @@ export const Register = () => {
             onChange={(e) => setMaxJobDistance(Number(e.target.value))}
             value={maxJobDistance}
           />
-        </label>
-        <button>Register</button>
+        </div>
+        <button className="btn btn-primary">Register</button>
       </form>
-    </>
+    </div>
   );
 };

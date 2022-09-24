@@ -25,10 +25,11 @@ export type Job = {
   };
   company: Company;
   wagePerHourInCents: number;
-  milesToTrave: number;
+  milesToTravel: number;
   shifts: Shift[];
   branch: String;
   branchPhoneNumber: String;
+  requirements: string[];
 };
 
 export type User = {
