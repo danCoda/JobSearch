@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Job } from "../customTypes";
 import { useJobList } from "../Hooks/useJobList";
-
-const workerId = "7f90df6e-b832-44e2-b624-3143d428001f";
+import { State } from "../State";
 
 export const JobList = () => {
+  const navigate = useNavigate();
+
   const { getJobList, error, isPending } = useJobList();
   const [jobs, setJobs] = useState<Job[]>([]);
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      const jobs = await getJobList(workerId);
-      setJobs(jobs);
-    };
+  const { user, jobs: jobsFromState } = useSelector((state: State) => state);
 
-    fetchJobs()
-      .catch(console.error);
+  useEffect(() => {
+    setJobs(jobsFromState.availableJobs);
+  }, [jobsFromState.availableJobs]);
+
+  useEffect(() => {
+    if (!user.currentUser) {
+      return navigate("/login");
+    }
+
+    getJobList(user.currentUser.workerId);
 
     return () => {
       setJobs([]);
     };
-  }, []);
-
-  console.log("Jobs: ", jobs);
+  }, [user.currentUser]);
 
   return (
     <>
@@ -33,7 +38,7 @@ export const JobList = () => {
           There was an error! <br /> Please contact Support
         </div>
       )}
-      {!isPending && !error && (
+      {!isPending && !error && jobs && (
         <table>
           <thead>
             <tr>

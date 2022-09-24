@@ -15,19 +15,19 @@ export const useJobList = () => {
     setIsPending(true);
 
     try {
-        const response = await fetch(`https://test.swipejobs.com/api/worker/${workerId}/matches`);
-        const jobs = await response.json();
+      const response = await fetch(
+        `https://test.swipejobs.com/api/worker/${workerId}/matches`
+      );
+      const jobs = await response.json();
 
-        setIsPending(false);
-        setError(null);
-        addJobList(jobs);
-
-        return jobs;
+      setIsPending(false);
+      setError(null);
+      addJobList(jobs);
     } catch (e) {
-        if (e instanceof Error) {
-            setError(e.message);
-            setIsPending(false);
-        }
+      if (e instanceof Error) {
+        setError(e.message);
+        setIsPending(false);
+      }
     }
   };
 

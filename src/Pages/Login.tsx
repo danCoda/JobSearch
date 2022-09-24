@@ -1,20 +1,41 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLogin } from "../Hooks/useLogin";
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login, error, isPending } = useLogin();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Yoooo, handle the registraiton");
+
+    await login(email, password);
+    alert("User profiles are not available. Click Test instead");
+  };
+
+  const setTestAccount = async () => {
+    await login(email, password);
+    navigate("/jobList");
   };
 
   return (
     <>
-      <h2>Login</h2>
-      <div>
-        If you have no account, <strong><a href="/register">Click here</a></strong> to Register
-      </div>
+      <h2>Login {isPending}</h2>
+      <p>
+        If you have no account,{" "}
+        <strong>
+          <a href="/register">Click here</a>
+        </strong>{" "}
+        to Register
+      </p>
+      <p>
+        If you are <em>Jim Rose</em>,{" "}
+        <button onClick={setTestAccount}>Test</button>
+      </p>
       <form onSubmit={handleSubmit}>
         <label>
           <span>Email</span>
@@ -32,7 +53,9 @@ export const Login = () => {
             value={password}
           />
         </label>
-        <button>Login</button>
+        {isPending && <button disabled>Loading...</button>}
+        {!isPending && <button>Login</button>}
+        {error && <p>Error! {error}</p>}
       </form>
     </>
   );
