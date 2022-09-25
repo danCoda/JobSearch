@@ -30,6 +30,8 @@
   Todo:
   - Accept / reject job. 
   - Save job status.
+
+  - Save icons.
   - Styling up to scratch!
   - Make modular / code practise / readability etc.
   - Map on website somehow?
