@@ -17,6 +17,11 @@ type Shift = {
   endDate: Date;
 };
 
+export type JobDecision = {
+  isAccepted: boolean;
+  decisionDate: Date;
+};
+
 export type Job = {
   jobId: string;
   jobTitle: {
@@ -30,6 +35,7 @@ export type Job = {
   branch: String;
   branchPhoneNumber: String;
   requirements: string[];
+  decision?: JobDecision;
 };
 
 export type User = {

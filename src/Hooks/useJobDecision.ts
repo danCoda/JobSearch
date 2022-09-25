@@ -6,6 +6,8 @@ import { User } from "../customTypes";
 import { actionCreators, State } from "../State";
 
 export const useJobDecision = () => {
+  const dispatch = useDispatch();
+  const { saveJobDecision } = bindActionCreators(actionCreators, dispatch);
   const [error, setError] = useState<null | string>(null);
   const [isPending, setIsPending] = useState(false);
   const [isConfirmedByServer, setIsConfirmedByServer] = useState(false);
@@ -32,8 +34,8 @@ export const useJobDecision = () => {
       setIsPending(false);
       setError(null);
       setIsConfirmedByServer(true);
-      // Todo: Maybe remove from available jobs list (store)
 
+      saveJobDecision(jobId, decision, new Date().toISOString());
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);

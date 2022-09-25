@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
+
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Job } from "../customTypes";
+import { Job, JobDecision } from "../customTypes";
 import { useJobList } from "../Hooks/useJobList";
 import { State } from "../State";
 import { JobListDetail } from "./JobListDetail";
@@ -19,18 +21,34 @@ export const JobList = () => {
     setJobs(jobsFromState.availableJobs);
   }, [jobsFromState.availableJobs]);
 
+  console.log("Available jobs for list:", jobsFromState.availableJobs);
+
   useEffect(() => {
     if (!user.currentUser) {
       return navigate("/login");
     }
 
-    getJobList(user.currentUser.workerId);
+    // Preserve existing jobs in Store
+    if (!jobsFromState.availableJobs) {
+      getJobList(user.currentUser.workerId);
+    }
 
     return () => {
       setJobs([]);
     };
   }, [user.currentUser]);
 
+  const getJobDecisionMessage = (decision: JobDecision) => {
+    return `${decision.isAccepted ? "Accepted" : "Rejected"} on ${dayjs(
+      decision.decisionDate
+    ).format("MMM D, ddd, YYYY")}`;
+  };
+
+  const getFontColour = (decision: undefined | JobDecision): string => {
+    if (!decision) return "text-dark";
+
+    return decision.isAccepted ? "text-success" : "text-danger";
+  }
   return (
     <div className="mx-sm-auto col-lg-5 mt-sm-5">
       <h2>Available Jobs</h2>
@@ -48,15 +66,21 @@ export const JobList = () => {
           jobs.map((job) => (
             <Accordion.Item eventKey={job.jobId} key={job.jobId}>
               <Accordion.Header>
-                <div>
+                <div className={getFontColour(job.decision)}>
                   <strong>{job.jobTitle.name}</strong>
                   <br />
                   {job.company.name} ({job.milesToTravel} miles away)
                   <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
+                  {job.decision && (
+                    <>
+                      <br />
+                      {getJobDecisionMessage(job.decision)}
+                    </>
+                  )}
                 </div>
               </Accordion.Header>
               <Accordion.Body>
-                <JobListDetail job={job} />
+                <JobListDetail job={job} fontColour={getFontColour(job.decision)}/>
               </Accordion.Body>
             </Accordion.Item>
           ))}

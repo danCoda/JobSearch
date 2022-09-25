@@ -3,7 +3,7 @@ import { Job } from "../customTypes";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useJobDecision } from "../Hooks/useJobDecision";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Props {
   job: Job;
@@ -88,15 +88,9 @@ Please contact swipejobs support`
       </Modal.Body>
       <Modal.Footer>
         {errorWithNetwork || isConfirmedByServer ? (
-          <>
-            <Button
-              onClick={() => {
-                navigate("/jobList");
-              }}
-            >
-              Go Back to Job List
-            </Button>
-          </>
+          <Link className="btn btn-primary" to="/jobList">
+            Go back to Job List
+          </Link>
         ) : (
           <>
             <Button onClick={onHide} disabled={isPending}>

@@ -21,4 +21,16 @@ interface RemoveJobsAction {
   type: JobListActionType.REMOVE_JOBS;
 }
 
-export type JobsAction = AddJobsAction | RemoveJobsAction;
+interface SaveJobDecision {
+  type: JobListActionType.SAVE_DECISION;
+  payload: {
+    jobId: string;
+    isAccepted: boolean;
+    decisionDate: string;
+  };
+}
+
+export type JobsAction =
+  | AddJobsAction
+  | RemoveJobsAction
+  | SaveJobDecision;

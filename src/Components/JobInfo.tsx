@@ -51,10 +51,7 @@ export const JobInfo = () => {
   };
 
   const getShiftDate = (startDate: Date, endDate: Date) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    return `${dayjs(start).format("MMM D, ddd h:mm A")} - ${dayjs(end).format(
+    return `${dayjs(startDate).format("MMM D, ddd h:mm A")} - ${dayjs(endDate).format(
       "h:mm A z"
     )}`;
   };
