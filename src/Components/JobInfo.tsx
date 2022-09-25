@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import timezone from "dayjs/plugin/timezone";
-import { Job } from "../customTypes";
-import { actionCreators, State } from "../State";
 import {
   CalendarIcon,
   LocationIcon,
@@ -23,21 +21,24 @@ import {
   MainInfoEmphasis,
   ShiftDay,
 } from "./JobInfoStyles";
-import { JobDecisionModal } from "./JobDecisionModal";
 import { Button } from "react-bootstrap";
+import { Job } from "../customTypes";
+import { State } from "../State";
+import { JobDecisionModal } from "./JobDecisionModal";
 
 // Needed for timezone.
 dayjs.extend(advancedFormat);
 dayjs.extend(timezone);
 
-export const JobInfo = () => {
+const GOOGLE_MAPS_API_KEY = "AIzaSyB1N6YdJ7UK1O-BPzsFfZSbFQg3zhXC4Vc";
+
+export const JobInfo: React.FC = () => {
   const navigate = useNavigate();
   const selectedJobId = useParams().jobId;
 
-  const { jobs, user } = useSelector((state: State) => state);
+  const { jobs } = useSelector((state: State) => state);
 
-  const [job, setJob] = useState<null | Job>(null);
-
+  const [selectedJob, setSelectedJob] = useState<null | Job>(null);
   const [jobDecision, setJobDecision] = useState<null | boolean>(null);
   const [showConirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -47,12 +48,12 @@ export const JobInfo = () => {
     if (!availableJobs) {
       return navigate("/jobList");
     }
-    const job = availableJobs.find((j) => j.jobId === selectedJobId);
 
-    setJob(job!);
+    const selectedJob = availableJobs.find((j) => j.jobId === selectedJobId);
+    setSelectedJob(selectedJob!);
   }, []);
 
-  const makeDecision = (decision: boolean) => {
+  const makeJobDecision = (decision: boolean) => {
     setJobDecision(decision);
     setShowConfirmationModal(true);
   };
@@ -70,27 +71,27 @@ export const JobInfo = () => {
           Go back to jobs
         </Link>
       </Button>
-      {job && (
+      {selectedJob && (
         <JobInfoContainer className="mx-sm-auto col-lg-6">
           <MainImage
-            src={`${job.jobTitle.imageUrl}`}
-            alt={`Worker of ${job.company.name}`}
+            src={`${selectedJob.jobTitle.imageUrl}`}
+            alt={`Worker of ${selectedJob.company.name}`}
           />
           <JobHeader>
-            <h2>{job.jobTitle.name}</h2>
-            <h3>{job.company.name}</h3>
+            <h2>{selectedJob.jobTitle.name}</h2>
+            <h3>{selectedJob.company.name}</h3>
           </JobHeader>
           <MainInfo>
             <div>
               <div>Distance</div>
               <MainInfoEmphasis>
-                {job.milesToTravel.toFixed(1)} miles
+                {selectedJob.milesToTravel.toFixed(1)} miles
               </MainInfoEmphasis>
             </div>
             <div>
               <div>Hourly Rate</div>
               <MainInfoEmphasis>
-                ${(job.wagePerHourInCents / 100).toFixed(2)}
+                ${(selectedJob.wagePerHourInCents / 100).toFixed(2)}
               </MainInfoEmphasis>
             </div>
           </MainInfo>
@@ -98,22 +99,22 @@ export const JobInfo = () => {
             <CalendarIcon size={24} />
             <div>
               <h4>Shift Dates</h4>
-              {job.shifts.map((s, i) => (
+              {selectedJob.shifts.map((s, i) => (
                 <ShiftDay key={`${i}-${s.startDate}`}>
                   {getShiftDate(s.startDate, s.endDate)}
                 </ShiftDay>
               ))}{" "}
             </div>
           </Info>
-
           <Info>
             <LocationIcon size={24} />
             <div>
               <div>
                 <h4>Location</h4>
-                {job.company.address.formattedAddress}
+                {selectedJob.company.address.formattedAddress}
                 <br />
-                {job.milesToTravel} miles from your job search location
+                {selectedJob.milesToTravel} miles from your selectedJob search
+                location
               </div>
               <div>
                 <iframe
@@ -123,9 +124,10 @@ export const JobInfo = () => {
                   style={{ border: "0" }}
                   loading="lazy"
                   allowFullScreen
-                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyB1N6YdJ7UK1O-BPzsFfZSbFQg3zhXC4Vc
-    &q=${job.company.address.formattedAddress}`}
+                  src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}
+    &q=${selectedJob.company.address.formattedAddress}`}
                 ></iframe>
+                <div>(Map may not be accurate)</div>
               </div>
             </div>
           </Info>
@@ -135,8 +137,8 @@ export const JobInfo = () => {
             <div>
               <h4>Requirements</h4>
               <DashedList>
-                {job.requirements ? (
-                  job.requirements?.map((r) => <li key={r}>{r}</li>)
+                {selectedJob.requirements ? (
+                  selectedJob.requirements?.map((r) => <li key={r}>{r}</li>)
                 ) : (
                   <li>None</li>
                 )}
@@ -148,9 +150,9 @@ export const JobInfo = () => {
             <PersonIcon size={24} />
             <div>
               <h4>Report To</h4>
-              {job.company.reportTo.name} - {"   "}
-              <a href={`tel:${job.branchPhoneNumber}`}>
-                Call {job.branchPhoneNumber}
+              {selectedJob.company.reportTo.name} - {"   "}
+              <a href={`tel:${selectedJob.branchPhoneNumber}`}>
+                Call {selectedJob.branchPhoneNumber}
               </a>
             </div>
           </Info>
@@ -158,16 +160,20 @@ export const JobInfo = () => {
             <Button
               size="lg"
               variant="outline-dark"
-              onClick={() => makeDecision(false)}
+              onClick={() => makeJobDecision(false)}
             >
               No Thanks
             </Button>
-            <Button size="lg" variant="dark" onClick={() => makeDecision(true)}>
+            <Button
+              size="lg"
+              variant="dark"
+              onClick={() => makeJobDecision(true)}
+            >
               I'll Take It
             </Button>
           </JobOfferDecision>
           <JobDecisionModal
-            job={job}
+            job={selectedJob}
             decision={jobDecision as boolean}
             show={showConirmationModal}
             onHide={() => setShowConfirmationModal(false)}

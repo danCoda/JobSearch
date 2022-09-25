@@ -34,7 +34,7 @@ export const useLogin = () => {
             setTimeout(() => {
                 setIsPending(false);
                 setError(null);
-                loginUser(user); // Set user in Store.
+                loginUser(user); // Save user in Store.
                 resolve();
             }, 2000);
             

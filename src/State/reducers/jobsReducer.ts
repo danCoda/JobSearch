@@ -14,7 +14,6 @@ const reducer = (
   action: { type: string; payload?: any }
 ) => {
   switch (action.type) {
-    
     case JobListActionType.ADD_JOBS:
       return { ...state, availableJobs: action.payload };
 
@@ -34,7 +33,7 @@ const reducer = (
         }
         return j;
       });
-      
+
       return { ...state, availableJobs: updatedJobs };
 
     default:

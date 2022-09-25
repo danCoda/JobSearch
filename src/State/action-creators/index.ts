@@ -3,7 +3,6 @@ import { User } from "../../customTypes";
 import { UserLoginType, JobListActionType } from "../action-types";
 import { UserAction, JobsAction } from "../actions";
 import { Job } from "../../customTypes";
-import { stringify } from "querystring";
 
 export const loginUser = (user: User) => {
   return (dispatch: Dispatch<UserAction>) => {

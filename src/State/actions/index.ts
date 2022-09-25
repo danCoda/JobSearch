@@ -30,7 +30,4 @@ interface SaveJobDecision {
   };
 }
 
-export type JobsAction =
-  | AddJobsAction
-  | RemoveJobsAction
-  | SaveJobDecision;
+export type JobsAction = AddJobsAction | RemoveJobsAction | SaveJobDecision;

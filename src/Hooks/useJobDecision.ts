@@ -8,10 +8,12 @@ import { actionCreators, State } from "../State";
 export const useJobDecision = () => {
   const dispatch = useDispatch();
   const { saveJobDecision } = bindActionCreators(actionCreators, dispatch);
+
   const [error, setError] = useState<null | string>(null);
   const [isPending, setIsPending] = useState(false);
   const [isConfirmedByServer, setIsConfirmedByServer] = useState(false);
-  const { jobs, user } = useSelector((state: State) => state);
+
+  const { user } = useSelector((state: State) => state);
   const currentUser = user.currentUser as User;
 
   const makeJobDecision = async (decision: boolean, jobId: string) => {
@@ -34,6 +36,7 @@ export const useJobDecision = () => {
       setError(null);
       setIsConfirmedByServer(true);
 
+      // Save to Store.
       saveJobDecision(jobId, decision, new Date().toISOString());
     } catch (e) {
       if (e instanceof Error) {

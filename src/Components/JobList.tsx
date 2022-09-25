@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import {
-  CalendarIcon,
-  LocationIcon,
-  ToolsIcon,
-  PersonIcon,
-  OrganizationIcon
-} from "@primer/octicons-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Job, JobDecision } from "../customTypes";
@@ -20,7 +13,7 @@ const JobTitle = styled.h3`
   font-size: medium;
 `;
 
-export const JobList = () => {
+export const JobList: React.FC = () => {
   const navigate = useNavigate();
 
   const { getJobList, error, isPending } = useJobList();
@@ -31,7 +24,6 @@ export const JobList = () => {
   useEffect(() => {
     setJobs(jobsFromState.availableJobs);
   }, [jobsFromState.availableJobs]);
-
 
   useEffect(() => {
     if (!user.currentUser) {
@@ -58,7 +50,8 @@ export const JobList = () => {
     if (!decision) return "text-dark";
 
     return decision.isAccepted ? "text-success" : "text-danger";
-  }
+  };
+
   return (
     <div className="mx-lg-auto col-lg-5 mt-sm-5">
       <h2>Available Jobs</h2>
@@ -89,7 +82,10 @@ export const JobList = () => {
                 </div>
               </Accordion.Header>
               <Accordion.Body>
-                <JobListDetail job={job} fontColour={getFontColour(job.decision)}/>
+                <JobListDetail
+                  job={job}
+                  fontColour={getFontColour(job.decision)}
+                />
               </Accordion.Body>
             </Accordion.Item>
           ))}

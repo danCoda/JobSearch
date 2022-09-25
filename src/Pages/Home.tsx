@@ -24,14 +24,13 @@ export const Home = () => {
           </p>
           <br />
           <p>
-            To find <strong>Available jobs   </strong>
+            To find <strong>Available jobs </strong>
             <Button variant="outline-primary" onClick={onClickHandler}>
               Click here
             </Button>
           </p>
         </div>
         <img src={backgroundImage} className="img-fluid" alt="..." />
-
       </div>
     </>
   );

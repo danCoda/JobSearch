@@ -8,7 +8,6 @@ export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const { login, error, isPending } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,7 +19,7 @@ export const Login = () => {
     );
   };
 
-  const setTestAccount = async () => {
+  const loginWithTestAccount = async () => {
     await login(email, password);
     navigate("/jobList");
   };
@@ -46,7 +45,7 @@ export const Login = () => {
           <button
             type="button"
             className="btn btn-warning"
-            onClick={setTestAccount}
+            onClick={loginWithTestAccount}
           >
             Test here
           </button>
