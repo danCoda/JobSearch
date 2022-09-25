@@ -52,8 +52,8 @@ export const JobList: React.FC = () => {
     return decision.isAccepted ? "text-success" : "text-danger";
   };
 
-  return (
-    <div className="mx-lg-auto col-lg-5 mt-sm-5">
+  return user.currentUser ? (
+    <div className="mx-lg-auto col-lg-7 mt-sm-5">
       <h2>Available Jobs</h2>
       {isPending && <div>Loading jobs...</div>}
       {error && (
@@ -63,33 +63,37 @@ export const JobList: React.FC = () => {
       )}
 
       <Accordion>
-        {!isPending &&
-          !error &&
-          jobs &&
-          jobs.map((job) => (
-            <Accordion.Item eventKey={job.jobId} key={job.jobId}>
-              <Accordion.Header>
-                <div className={getFontColour(job.decision)}>
-                  <JobTitle>{job.jobTitle.name}</JobTitle>
-                  {job.company.name} ({job.milesToTravel.toFixed(2)} miles away)
-                  <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
-                  {job.decision && (
-                    <>
-                      <br />
-                      {getJobDecisionMessage(job.decision)}
-                    </>
-                  )}
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <JobListDetail
-                  job={job}
-                  fontColour={getFontColour(job.decision)}
-                />
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
+        {!isPending && !error && jobs && (
+          <>
+            <p>for you {user.currentUser.firstName}</p>
+
+            {jobs.map((job) => (
+              <Accordion.Item eventKey={job.jobId} key={job.jobId}>
+                <Accordion.Header>
+                  <div className={getFontColour(job.decision)}>
+                    <JobTitle>{job.jobTitle.name}</JobTitle>
+                    {job.company.name} ({job.milesToTravel.toFixed(2)} miles
+                    away)
+                    <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
+                    {job.decision && (
+                      <>
+                        <br />
+                        {getJobDecisionMessage(job.decision)}
+                      </>
+                    )}
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <JobListDetail
+                    job={job}
+                    fontColour={getFontColour(job.decision)}
+                  />
+                </Accordion.Body>
+              </Accordion.Item>
+            ))}
+          </>
+        )}
       </Accordion>
     </div>
-  );
+  ) : null;
 };
