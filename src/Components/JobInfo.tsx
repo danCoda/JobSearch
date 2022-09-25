@@ -12,6 +12,7 @@ import {
 } from "@primer/octicons-react";
 import {
   DashedList,
+  DistanceDescription,
   Info,
   JobHeader,
   JobInfoContainer,
@@ -21,7 +22,7 @@ import {
   MainInfoEmphasis,
   ShiftDay,
 } from "./JobInfoStyles";
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import { Job } from "../customTypes";
 import { State } from "../State";
 import { JobDecisionModal } from "./JobDecisionModal";
@@ -110,22 +111,33 @@ export const JobInfo: React.FC = () => {
               <div>
                 <h4>Location</h4>
                 {selectedJob.company.address.formattedAddress}
-                <br />
-                {selectedJob.milesToTravel} miles from your selectedJob search
-                location
+                <DistanceDescription>
+                  {selectedJob.milesToTravel.toFixed(2)} miles from your
+                  selected Job search location
+                </DistanceDescription>
               </div>
               <div>
-                <iframe
-                  title="Map of the office"
-                  width="100%"
-                  height="450"
-                  style={{ border: "0" }}
-                  loading="lazy"
-                  allowFullScreen
-                  src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                {process.env.REACT_APP_GOOGLE_MAPS_API_KEY ? (
+                  <>
+                    <iframe
+                      title="Map of the office"
+                      width="100%"
+                      height="450"
+                      style={{ border: "0" }}
+                      loading="lazy"
+                      allowFullScreen
+                      src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
     &q=${selectedJob.company.address.formattedAddress}`}
-                ></iframe>
-                <div>(Map may not be accurate)</div>
+                    ></iframe>
+                    <div>(Map may not be accurate)</div>
+                  </>
+                ) : (
+                  <Alert variant="warning">
+                    Hello devs! Your Google API key was not found in the
+                    environment variables, so you can't see Google Maps; please
+                    read the Readme.
+                  </Alert>
+                )}
               </div>
             </div>
           </Info>

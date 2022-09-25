@@ -13,6 +13,11 @@ const JobTitle = styled.h3`
   font-size: medium;
 `;
 
+const PersonalMessage = styled.div`
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+`;
+
 export const JobList: React.FC = () => {
   const navigate = useNavigate();
 
@@ -65,7 +70,9 @@ export const JobList: React.FC = () => {
       <Accordion>
         {!isPending && !error && jobs && (
           <>
-            <p>for you {user.currentUser.firstName}</p>
+            <PersonalMessage>
+              for <strong>{user.currentUser.firstName}</strong>
+            </PersonalMessage>
 
             {jobs.map((job) => (
               <Accordion.Item eventKey={job.jobId} key={job.jobId}>

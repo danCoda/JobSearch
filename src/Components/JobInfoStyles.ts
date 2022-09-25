@@ -44,6 +44,11 @@ export const Info = styled.div`
   }
 `;
 
+export const DistanceDescription = styled.div`
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+`;
+
 export const MainInfoEmphasis = styled.div`
   color: white;
   font-size: 2rem;
