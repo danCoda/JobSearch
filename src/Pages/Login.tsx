@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../Hooks/useLogin";
 
@@ -14,7 +15,9 @@ export const Login = () => {
     e.preventDefault();
 
     await login(email, password);
-    alert("User profiles are currently not available.\n\nClick Test instead");
+    alert(
+      "User profiles are currently not available.\n\nClick 'Test here' instead"
+    );
   };
 
   const setTestAccount = async () => {
@@ -32,8 +35,8 @@ export const Login = () => {
         </strong>{" "}
         to Register
       </p>
-      <p>
-        If you are <em>Jim Rose</em>,{" "}
+      <Alert variant="warning">
+        If you are <em>Jim Rose</em>, and you probably are,{"   "}
         {isPending && (
           <button className="btn btn-warning" disabled>
             Loading...
@@ -48,7 +51,8 @@ export const Login = () => {
             Test here
           </button>
         )}
-      </p>
+      </Alert>
+
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label" htmlFor="inputEmail">

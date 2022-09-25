@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useJobDecision } from "../Hooks/useJobDecision";
 import { Link, useNavigate } from "react-router-dom";
+import { AlertIcon } from "@primer/octicons-react";
+import styled from "styled-components";
 
 interface Props {
   job: Job;
@@ -11,6 +13,10 @@ interface Props {
   show: boolean;
   onHide: () => void;
 }
+
+const Icon = styled.span`
+  margin-right: 0.5rem;
+`;
 
 export const JobDecisionModal: React.FC<Props> = ({
   job,
@@ -52,7 +58,7 @@ Please contact swipejobs support`
   useEffect(() => {
     if (isConfirmedByServer) {
       setModalMainMessage(
-        `Job ${decision === true ? "Accepted" : "Rejected"}!`
+        `Job was ${decision === true ? "Accepted" : "Rejected"}!`
       );
     }
   }, [isConfirmedByServer]);
@@ -75,6 +81,9 @@ Please contact swipejobs support`
     <Modal show={show} size="lg" centered>
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
+          <Icon>
+            <AlertIcon size={24} verticalAlign="middle"/>
+          </Icon>
           Confirm Job {decision === true ? "Acceptance" : "Rejection"}
         </Modal.Title>
       </Modal.Header>

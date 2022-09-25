@@ -7,15 +7,24 @@ import timezone from "dayjs/plugin/timezone";
 import { Job } from "../customTypes";
 import { actionCreators, State } from "../State";
 import {
+  CalendarIcon,
+  LocationIcon,
+  ToolsIcon,
+  PersonIcon,
+} from "@primer/octicons-react";
+import {
   DashedList,
+  Info,
+  JobHeader,
   JobInfoContainer,
   JobOfferDecision,
-  Location,
+  MainImage,
   MainInfo,
   MainInfoEmphasis,
   ShiftDay,
 } from "./JobInfoStyles";
 import { JobDecisionModal } from "./JobDecisionModal";
+import { Button } from "react-bootstrap";
 
 // Needed for timezone.
 dayjs.extend(advancedFormat);
@@ -51,9 +60,9 @@ export const JobInfo = () => {
   };
 
   const getShiftDate = (startDate: Date, endDate: Date) => {
-    return `${dayjs(startDate).format("MMM D, ddd h:mm A")} - ${dayjs(endDate).format(
-      "h:mm A z"
-    )}`;
+    return `${dayjs(startDate).format("MMM D, ddd h:mm A")} - ${dayjs(
+      endDate
+    ).format("h:mm A z")}`;
   };
 
   const openMaps = (address: string) => {
@@ -62,18 +71,21 @@ export const JobInfo = () => {
 
   return (
     <>
-      <Link to="/jobList" className="nav-link">
-        Go back to jobs
-      </Link>
+      <Button variant="link">
+        <Link to="/jobList" className="nav-link">
+          Go back to jobs
+        </Link>
+      </Button>
       {job && (
-        <JobInfoContainer className="mx-sm-auto col-lg-6 mt-sm-5">
-          <img
-            className="img-fluid"
+        <JobInfoContainer className="mx-sm-auto col-lg-6">
+          <MainImage
             src={`${job.jobTitle.imageUrl}`}
             alt={`Worker of ${job.company.name}`}
           />
-          <h2>{job.jobTitle.name}</h2>
-          <h3>{job.company.name}</h3>
+          <JobHeader>
+            <h2>{job.jobTitle.name}</h2>
+            <h3>{job.company.name}</h3>
+          </JobHeader>
           <MainInfo>
             <div>
               <div>Distance</div>
@@ -88,16 +100,20 @@ export const JobInfo = () => {
               </MainInfoEmphasis>
             </div>
           </MainInfo>
-          <div>
-            <h4>Shift Dates</h4>
-            {job.shifts.map((s, i) => (
-              <ShiftDay key={`${i}-${s.startDate}`}>
-                {getShiftDate(s.startDate, s.endDate)}
-              </ShiftDay>
-            ))}
-          </div>
-          <hr />
-          <Location>
+          <Info>
+            <CalendarIcon size={24} />
+            <div>
+              <h4>Shift Dates</h4>
+              {job.shifts.map((s, i) => (
+                <ShiftDay key={`${i}-${s.startDate}`}>
+                  {getShiftDate(s.startDate, s.endDate)}
+                </ShiftDay>
+              ))}{" "}
+            </div>
+          </Info>
+          
+          <Info>
+            <LocationIcon size={24} />
             <div>
               <h4>Location</h4>
               {job.company.address.formattedAddress}
@@ -111,26 +127,40 @@ export const JobInfo = () => {
             >
               Open map
             </button>
-          </Location>
-          <hr />
-          <div>
-            <h4>Requirements</h4>
-            <DashedList>
-              {job.requirements ? (
-                job.requirements?.map((r) => <li key={r}>{r}</li>)
-              ) : (
-                <li>None</li>
-              )}
-            </DashedList>
-          </div>
-          <hr />
-          <div>
-            <h4>Report To</h4>
-            {job.company.reportTo.name} - {job.branchPhoneNumber}
-          </div>
+          </Info>
+          
+          <Info>
+            <ToolsIcon size={24} />
+            <div>
+              <h4>Requirements</h4>
+              <DashedList>
+                {job.requirements ? (
+                  job.requirements?.map((r) => <li key={r}>{r}</li>)
+                ) : (
+                  <li>None</li>
+                )}
+              </DashedList>
+            </div>
+          </Info>
+          
+          <Info>
+            <PersonIcon size={24} />
+            <div>
+              <h4>Report To</h4>
+              {job.company.reportTo.name} - {job.branchPhoneNumber}
+            </div>
+          </Info>
           <JobOfferDecision>
-            <button onClick={() => makeDecision(false)}>No Thanks</button>
-            <button onClick={() => makeDecision(true)}>I'll Take It</button>
+            <Button
+              size="lg"
+              variant="outline-dark"
+              onClick={() => makeDecision(false)}
+            >
+              No Thanks
+            </Button>
+            <Button size="lg" variant="dark" onClick={() => makeDecision(true)}>
+              I'll Take It
+            </Button>
           </JobOfferDecision>
           <JobDecisionModal
             job={job}

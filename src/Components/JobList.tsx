@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-
+import {
+  CalendarIcon,
+  LocationIcon,
+  ToolsIcon,
+  PersonIcon,
+  OrganizationIcon
+} from "@primer/octicons-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Job, JobDecision } from "../customTypes";
@@ -8,6 +14,11 @@ import { useJobList } from "../Hooks/useJobList";
 import { State } from "../State";
 import { JobListDetail } from "./JobListDetail";
 import Accordion from "react-bootstrap/Accordion";
+import styled from "styled-components";
+
+const JobTitle = styled.h3`
+  font-size: medium;
+`;
 
 export const JobList = () => {
   const navigate = useNavigate();
@@ -67,9 +78,8 @@ export const JobList = () => {
             <Accordion.Item eventKey={job.jobId} key={job.jobId}>
               <Accordion.Header>
                 <div className={getFontColour(job.decision)}>
-                  <strong>{job.jobTitle.name}</strong>
-                  <br />
-                  {job.company.name} ({job.milesToTravel} miles away)
+                  <JobTitle>{job.jobTitle.name}</JobTitle>
+                  {job.company.name} ({job.milesToTravel.toFixed(2)} miles away)
                   <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
                   {job.decision && (
                     <>
@@ -85,44 +95,6 @@ export const JobList = () => {
             </Accordion.Item>
           ))}
       </Accordion>
-
-      {/* <div className="accordion" id="jobsList">
-        {!isPending &&
-          !error &&
-          jobs &&
-          jobs.map((job) => (
-            <div className="accordion-item" key={job.jobId}>
-              <h3 className="accordion-header" id={`heading-${job.jobId}`}>
-                <button
-                  className="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target={`#collapse-${job.jobId}`}
-                  aria-expanded="false"
-                  aria-controls={`collapse-${job.jobId}`}
-                >
-                  <div>
-                    <strong>{job.jobTitle.name}</strong>
-                    <br />
-                    {job.company.name} ({job.milesToTravel} miles away)
-                    <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
-                  </div>
-                </button>
-              </h3>
-
-              <div
-                id={`collapse-${job.jobId}`}
-                className="accordion-collapse collapse"
-                aria-labelledby="headingOne"
-                data-bs-parent="#jobsList"
-              >
-                <div className="accordion-body">
-                  <JobListDetail job={job} />
-                </div>
-              </div>
-            </div>
-          ))}
-      </div> */}
     </div>
   );
 };

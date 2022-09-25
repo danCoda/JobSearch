@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +19,9 @@ export const Register = () => {
   return (
     <div className="mx-sm-auto col-lg-5 mt-sm-5">
       <h2>Register</h2>
+      <Alert variant="warning">
+        This page is for demonstration purposes only.
+      </Alert>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label" htmlFor="inputEmail">
