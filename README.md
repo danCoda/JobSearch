@@ -41,7 +41,8 @@
 
 ### How to run:
 1. Download project.
-2. In a terminal in the project directory, type ```npm install``` (or ```yarn```) to install the project dependencies.
-3. In a terminal in the project directory, type ```npm start``` (or ```yarn start```) to run the project (on ```http://localhost:3000```).
+2. Ensure you have a [Google API key](https://developers.google.com/maps/documentation/maps-static/get-api-key#:~:text=Go%20to%20the%20Google%20Maps%20Platform%20%3E%20Credentials%20page.&text=On%20the%20Credentials%20page%2C%20click,Click%20Close.). Save it as variable; ```REACT_APP_GOOGLE_MAPS_API_KEY=[your API key]``` in a new file called ```.env``` in the root directory. (If you need help with this for demo purposes, please contact me.)
+3. In a terminal in the project directory, type ```npm install``` (or ```yarn```) to install the project dependencies.
+4. In a terminal in the project directory, type ```npm start``` (or ```yarn start```) to run the project (on ```http://localhost:3000```).
 
 ![Homepage](https://i.imgur.com/3PRM3oo.png)
