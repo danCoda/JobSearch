@@ -1,0 +1,46 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { User } from "../customTypes";
+import { actionCreators, State } from "../State";
+
+export const useJobDecision = () => {
+  const [error, setError] = useState<null | string>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [isConfirmedByServer, setIsConfirmedByServer] = useState(false);
+  const { jobs, user } = useSelector((state: State) => state);
+  const currentUser = user.currentUser as User;
+
+  const makeJobDecision = async (decision: boolean, jobId: string) => {
+    setError(null);
+    setIsPending(true);
+
+    try {
+      const response = await fetch(
+        `https://test.swipejobs.com/api/worker/${
+          currentUser.workerId
+        }/job/${jobId}/${decision === true ? "accept" : "reject"}`
+      );
+      const data = await response.json();
+      console.log("Decision!", data);
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      setIsPending(false);
+      setError(null);
+      setIsConfirmedByServer(true);
+      // Todo: Maybe remove from available jobs list (store)
+
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+        setIsPending(false);
+      }
+    }
+  };
+
+  return { makeJobDecision, error, isPending, isConfirmedByServer };
+};

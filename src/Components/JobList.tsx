@@ -5,6 +5,7 @@ import { Job } from "../customTypes";
 import { useJobList } from "../Hooks/useJobList";
 import { State } from "../State";
 import { JobListDetail } from "./JobListDetail";
+import Accordion from "react-bootstrap/Accordion";
 
 export const JobList = () => {
   const navigate = useNavigate();
@@ -40,7 +41,28 @@ export const JobList = () => {
         </div>
       )}
 
-      <div className="accordion" id="jobsList">
+      <Accordion>
+        {!isPending &&
+          !error &&
+          jobs &&
+          jobs.map((job) => (
+            <Accordion.Item eventKey={job.jobId} key={job.jobId}>
+              <Accordion.Header>
+                <div>
+                  <strong>{job.jobTitle.name}</strong>
+                  <br />
+                  {job.company.name} ({job.milesToTravel} miles away)
+                  <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
+                </div>
+              </Accordion.Header>
+              <Accordion.Body>
+                <JobListDetail job={job} />
+              </Accordion.Body>
+            </Accordion.Item>
+          ))}
+      </Accordion>
+
+      {/* <div className="accordion" id="jobsList">
         {!isPending &&
           !error &&
           jobs &&
@@ -56,11 +78,10 @@ export const JobList = () => {
                   aria-controls={`collapse-${job.jobId}`}
                 >
                   <div>
-                    <strong>{job.jobTitle.name}</strong> 
+                    <strong>{job.jobTitle.name}</strong>
                     <br />
                     {job.company.name} ({job.milesToTravel} miles away)
-                    <br />
-                    ${(job.wagePerHourInCents / 100).toFixed(2)} per hour
+                    <br />${(job.wagePerHourInCents / 100).toFixed(2)} per hour
                   </div>
                 </button>
               </h3>
@@ -77,7 +98,7 @@ export const JobList = () => {
               </div>
             </div>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };

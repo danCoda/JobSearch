@@ -14,7 +14,7 @@ export const Login = () => {
     e.preventDefault();
 
     await login(email, password);
-    alert("User profiles are not available. Click Test instead");
+    alert("User profiles are currently not available.\n\nClick Test instead");
   };
 
   const setTestAccount = async () => {

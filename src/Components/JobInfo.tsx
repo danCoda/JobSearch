@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { bindActionCreators } from "redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import timezone from "dayjs/plugin/timezone";
 import { Job } from "../customTypes";
 import { actionCreators, State } from "../State";
-import styled from "styled-components";
 import {
   DashedList,
   JobInfoContainer,
@@ -17,19 +15,40 @@ import {
   MainInfoEmphasis,
   ShiftDay,
 } from "./JobInfoStyles";
+import { JobDecisionModal } from "./JobDecisionModal";
 
 // Needed for timezone.
 dayjs.extend(advancedFormat);
 dayjs.extend(timezone);
 
 export const JobInfo = () => {
+  const navigate = useNavigate();
   const selectedJobId = useParams().jobId;
 
-  const { jobs } = useSelector((state: State) => state);
-  const availableJobs = jobs.availableJobs as Job[];
+  const { jobs, user } = useSelector((state: State) => state);
 
-  const job = availableJobs.find((j) => j.jobId === selectedJobId);
-  console.log("Job: ", job);
+  const [job, setJob] = useState<null | Job>(null);
+
+  const [jobDecision, setJobDecision] = useState<null | boolean>(null);
+  const [showConirmationModal, setShowConfirmationModal] = useState(false);
+
+  useEffect(() => {
+    const availableJobs = jobs.availableJobs as Job[];
+    console.log("Dann, available: ", availableJobs);
+    if (!availableJobs) {
+      return navigate("/jobList");
+    }
+    const job = availableJobs.find((j) => j.jobId === selectedJobId);
+
+    setJob(job!);
+    console.log("Job: ", job);
+  }, []);
+
+  const makeDecision = (decision: boolean) => {
+    console.log("Decision: ", decision);
+    setJobDecision(decision);
+    setShowConfirmationModal(true);
+  };
 
   const getShiftDate = (startDate: Date, endDate: Date) => {
     const start = new Date(startDate);
@@ -43,6 +62,7 @@ export const JobInfo = () => {
   const openMaps = (address: string) => {
     window.open(`http://maps.google.com/?q=${address}`, "_blank")!.focus();
   };
+
   return (
     <>
       <Link to="/jobList" className="nav-link">
@@ -112,9 +132,15 @@ export const JobInfo = () => {
             {job.company.reportTo.name} - {job.branchPhoneNumber}
           </div>
           <JobOfferDecision>
-            <button>No Thanks</button>
-            <button>I'll Take It</button>
+            <button onClick={() => makeDecision(false)}>No Thanks</button>
+            <button onClick={() => makeDecision(true)}>I'll Take It</button>
           </JobOfferDecision>
+          <JobDecisionModal
+            job={job}
+            decision={jobDecision as boolean}
+            show={showConirmationModal}
+            onHide={() => setShowConfirmationModal(false)}
+          />
         </JobInfoContainer>
       )}
     </>

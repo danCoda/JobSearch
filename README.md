@@ -27,4 +27,15 @@
 - Available jobs
 - Selected job ID
 
-  
+  Todo:
+  - Accept / reject job. 
+  - Save job status.
+  - Styling up to scratch!
+  - Make modular / code practise / readability etc.
+  - Map on website somehow?
+
+  - List down all frameworks / libraries used.
+  - List limitations (redux store does not persist when you reload page).
+
+  React bootstrap
+  Dayjs
