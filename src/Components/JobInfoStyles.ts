@@ -37,6 +37,7 @@ export const Info = styled.div`
   
   > div {
     margin-left: 1rem;
+    width: 100%;
   }
   h4 {
     font-weight: bolder;

@@ -43,18 +43,16 @@ export const JobInfo = () => {
 
   useEffect(() => {
     const availableJobs = jobs.availableJobs as Job[];
-    console.log("Dann, available: ", availableJobs);
+   
     if (!availableJobs) {
       return navigate("/jobList");
     }
     const job = availableJobs.find((j) => j.jobId === selectedJobId);
 
     setJob(job!);
-    console.log("Job: ", job);
   }, []);
 
   const makeDecision = (decision: boolean) => {
-    console.log("Decision: ", decision);
     setJobDecision(decision);
     setShowConfirmationModal(true);
   };
@@ -63,10 +61,6 @@ export const JobInfo = () => {
     return `${dayjs(startDate).format("MMM D, ddd h:mm A")} - ${dayjs(
       endDate
     ).format("h:mm A z")}`;
-  };
-
-  const openMaps = (address: string) => {
-    window.open(`http://maps.google.com/?q=${address}`, "_blank")!.focus();
   };
 
   return (
@@ -111,24 +105,31 @@ export const JobInfo = () => {
               ))}{" "}
             </div>
           </Info>
-          
+
           <Info>
             <LocationIcon size={24} />
             <div>
-              <h4>Location</h4>
-              {job.company.address.formattedAddress}
-              <br />
-              {job.milesToTravel} miles from your job search location
+              <div>
+                <h4>Location</h4>
+                {job.company.address.formattedAddress}
+                <br />
+                {job.milesToTravel} miles from your job search location
+              </div>
+              <div>
+                <iframe
+                  title="Map of the office"
+                  width="100%"
+                  height="450"
+                  style={{ border: "0" }}
+                  loading="lazy"
+                  allowFullScreen
+                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyB1N6YdJ7UK1O-BPzsFfZSbFQg3zhXC4Vc
+    &q=${job.company.address.formattedAddress}`}
+                ></iframe>
+              </div>
             </div>
-            <button
-              onClick={() => {
-                openMaps(job.company.address.formattedAddress);
-              }}
-            >
-              Open map
-            </button>
           </Info>
-          
+
           <Info>
             <ToolsIcon size={24} />
             <div>
@@ -142,7 +143,7 @@ export const JobInfo = () => {
               </DashedList>
             </div>
           </Info>
-          
+
           <Info>
             <PersonIcon size={24} />
             <div>

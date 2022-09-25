@@ -61,7 +61,7 @@ export const JobList = () => {
     return decision.isAccepted ? "text-success" : "text-danger";
   }
   return (
-    <div className="mx-sm-auto col-lg-5 mt-sm-5">
+    <div className="mx-lg-auto col-lg-5 mt-sm-5">
       <h2>Available Jobs</h2>
       {isPending && <div>Loading jobs...</div>}
       {error && (
