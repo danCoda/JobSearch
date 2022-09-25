@@ -30,8 +30,6 @@ import { JobDecisionModal } from "./JobDecisionModal";
 dayjs.extend(advancedFormat);
 dayjs.extend(timezone);
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyB1N6YdJ7UK1O-BPzsFfZSbFQg3zhXC4Vc";
-
 export const JobInfo: React.FC = () => {
   const navigate = useNavigate();
   const selectedJobId = useParams().jobId;
@@ -124,7 +122,7 @@ export const JobInfo: React.FC = () => {
                   style={{ border: "0" }}
                   loading="lazy"
                   allowFullScreen
-                  src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}
+                  src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
     &q=${selectedJob.company.address.formattedAddress}`}
                 ></iframe>
                 <div>(Map may not be accurate)</div>
