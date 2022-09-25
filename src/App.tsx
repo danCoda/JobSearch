@@ -1,5 +1,5 @@
 import "./app.css";
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { JobInfo } from "./Components/JobInfo";
 import { JobList } from "./Components/JobList";
