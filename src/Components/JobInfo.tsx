@@ -43,7 +43,7 @@ export const JobInfo = () => {
 
   useEffect(() => {
     const availableJobs = jobs.availableJobs as Job[];
-   
+
     if (!availableJobs) {
       return navigate("/jobList");
     }
@@ -148,7 +148,10 @@ export const JobInfo = () => {
             <PersonIcon size={24} />
             <div>
               <h4>Report To</h4>
-              {job.company.reportTo.name} - {job.branchPhoneNumber}
+              {job.company.reportTo.name} - {"   "}
+              <a href={`tel:${job.branchPhoneNumber}`}>
+                Call {job.branchPhoneNumber}
+              </a>
             </div>
           </Info>
           <JobOfferDecision>

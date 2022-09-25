@@ -25,7 +25,6 @@ export const useJobDecision = () => {
         }/job/${jobId}/${decision === true ? "accept" : "reject"}`
       );
       const data = await response.json();
-      console.log("Decision!", data);
 
       if (!data.success) {
         throw new Error(data.message);

@@ -1,43 +1,43 @@
-
 # Frontend Developer Technical Test (swipejobs)
 
 ## Website should be able to:
 
 - Register new user
+
   - address, formattedAddress, email, firstName, lastName, maxJobDistance, phoneNumber
 
-- Login to see available jobs 
+- Login to see available jobs
+
   - getAllUsers, followed by getJobs
 
-- Edit user profile
+- Edit user profile (not done)
 
-- Show available jobs 
+- Show jobs
+
   - list them, and link to job page
   - filter accepted jobs
+  - mark accepted / rejected jobs
 
 - Show job details
-  - link to map and ability to call?
+
+  - show address location in a map
   - accept or reject job
+  - dial contact's number from website
 
- - (HTML) Be responsive
+- (HTML) Be responsive
 
-### State management
+### Frameworks / libraries used:
 
-- User details
-- Available jobs
-- Selected job ID
+- React-Bootstrap (https://react-bootstrap.netlify.app/)
+- Styled Components (https://styled-components.com/)
+- Dayjs (https://day.js.org/)
+- React
+- TypeScript
+- React-Redux
+- React Router (https://reactrouter.com/)
+- Google Maps API (https://mapsplatform.google.com/)
+- Octicons (https://primer.style/octicons/)
 
-  Todo:
-  - Accept / reject job. 
-  - Save job status.
+### Some (current) limitations / challenges
 
-  - Save icons.
-  - Styling up to scratch!
-  - Make modular / code practise / readability etc.
-  - Map on website somehow?
-
-  - List down all frameworks / libraries used.
-  - List limitations (redux store does not persist when you reload page).
-
-  React bootstrap
-  Dayjs
+- Redux state doesn't persist; Store resets when the browser is refreshed.

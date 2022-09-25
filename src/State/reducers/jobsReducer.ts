@@ -13,8 +13,6 @@ const reducer = (
   state = initialState,
   action: { type: string; payload?: any }
 ) => {
-  console.log("Yooooo!!!", action);
-
   switch (action.type) {
     
     case JobListActionType.ADD_JOBS:
@@ -36,7 +34,7 @@ const reducer = (
         }
         return j;
       });
-      console.log("Updated jobs: ",  { ...state, availableJobs: updatedJobs });
+      
       return { ...state, availableJobs: updatedJobs };
 
     default:

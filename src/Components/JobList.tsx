@@ -32,7 +32,6 @@ export const JobList = () => {
     setJobs(jobsFromState.availableJobs);
   }, [jobsFromState.availableJobs]);
 
-  console.log("Available jobs for list:", jobsFromState.availableJobs);
 
   useEffect(() => {
     if (!user.currentUser) {
