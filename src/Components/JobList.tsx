@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import Accordion from "react-bootstrap/Accordion";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Job, JobDecision } from "../customTypes";
 import { useJobList } from "../Hooks/useJobList";
+import { Job, JobDecision } from "../customTypes";
 import { State } from "../State";
 import { JobListDetail } from "./JobListDetail";
-import Accordion from "react-bootstrap/Accordion";
 import styled from "styled-components";
 
 const JobTitle = styled.h3`
@@ -46,9 +46,13 @@ export const JobList: React.FC = () => {
   }, [user.currentUser]);
 
   const getJobDecisionMessage = (decision: JobDecision) => {
-    return `${decision.isAccepted ? "Accepted" : "Rejected"} on ${dayjs(
-      decision.decisionDate
-    ).format("MMM D, ddd, YYYY")}`;
+    const decisionDate = dayjs(decision.decisionDate).format(
+      "MMM D, ddd, YYYY"
+    );
+
+    return `${
+      decision.isAccepted ? "Accepted" : "Rejected"
+    } on ${decisionDate}`;
   };
 
   const getFontColour = (decision: undefined | JobDecision): string => {

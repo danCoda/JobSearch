@@ -1,6 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import Container from "react-bootstrap/Container";
@@ -31,17 +30,7 @@ export const Navbar: React.FC = () => {
         <Bar.Toggle aria-controls="basic-Bar-nav" />
         <Bar.Collapse id="basic-Bar-nav">
           <Nav className="navbar-nav ms-auto mb-2 mb-lg-0">
-            {!currentUser && (
-              <>
-                <Nav.Link href="/register" className="nav-link text-light">
-                  Register
-                </Nav.Link>
-                <Nav.Link href="/login" className="nav-link text-light">
-                  Login
-                </Nav.Link>
-              </>
-            )}
-            {currentUser && (
+            {currentUser ? (
               <>
                 <Nav.Link className="nav-link text-light">
                   {currentUser.firstName} {currentUser.lastName}
@@ -51,6 +40,15 @@ export const Navbar: React.FC = () => {
                   className="nav-link text-light"
                 >
                   Logout
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/register" className="nav-link text-light">
+                  Register
+                </Nav.Link>
+                <Nav.Link href="/login" className="nav-link text-light">
+                  Login
                 </Nav.Link>
               </>
             )}

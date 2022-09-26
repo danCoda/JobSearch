@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Job } from "../customTypes";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useJobDecision } from "../Hooks/useJobDecision";
 import { Link, useNavigate } from "react-router-dom";
 import { AlertIcon } from "@primer/octicons-react";
+import { Job } from "../customTypes";
 import styled from "styled-components";
+import { useJobDecision } from "../Hooks/useJobDecision";
 
 interface Props {
   job: Job;

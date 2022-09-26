@@ -10,6 +10,7 @@ import {
   ToolsIcon,
   PersonIcon,
 } from "@primer/octicons-react";
+import { Alert, Button } from "react-bootstrap";
 import {
   DashedList,
   DistanceDescription,
@@ -22,7 +23,6 @@ import {
   MainInfoEmphasis,
   ShiftDay,
 } from "./JobInfoStyles";
-import { Alert, Button } from "react-bootstrap";
 import { Job } from "../customTypes";
 import { State } from "../State";
 import { JobDecisionModal } from "./JobDecisionModal";
@@ -58,9 +58,10 @@ export const JobInfo: React.FC = () => {
   };
 
   const getShiftDate = (startDate: Date, endDate: Date) => {
-    return `${dayjs(startDate).format("MMM D, ddd h:mm A")} - ${dayjs(
-      endDate
-    ).format("h:mm A z")}`;
+    const start = dayjs(startDate).format("MMM D, ddd h:mm A");
+    const end = dayjs(endDate).format("h:mm A z");
+
+    return `${start} - ${end}`;
   };
 
   return (
@@ -80,6 +81,7 @@ export const JobInfo: React.FC = () => {
             <h2>{selectedJob.jobTitle.name}</h2>
             <h3>{selectedJob.company.name}</h3>
           </JobHeader>
+          
           <MainInfo>
             <div>
               <div>Distance</div>
@@ -94,6 +96,7 @@ export const JobInfo: React.FC = () => {
               </MainInfoEmphasis>
             </div>
           </MainInfo>
+
           <Info>
             <CalendarIcon size={24} />
             <div>
@@ -102,9 +105,10 @@ export const JobInfo: React.FC = () => {
                 <ShiftDay key={`${i}-${s.startDate}`}>
                   {getShiftDate(s.startDate, s.endDate)}
                 </ShiftDay>
-              ))}{" "}
+              ))}
             </div>
           </Info>
+
           <Info>
             <LocationIcon size={24} />
             <div>
@@ -166,6 +170,7 @@ export const JobInfo: React.FC = () => {
               </a>
             </div>
           </Info>
+
           <JobOfferDecision>
             <Button
               size="lg"

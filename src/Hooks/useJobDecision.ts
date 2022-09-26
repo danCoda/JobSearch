@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { User } from "../customTypes";
 import { actionCreators, State } from "../State";
